@@ -3,6 +3,7 @@ k = 9e9  # Coulomb's constant
 G = 6.67430e-11  # Gravitational constant
 g = 9.8
 point_list = []
+
 def potential_energy(r,m,q,type,K=0):
     r = np.linalg.norm(r)
     if type == 'gravity':

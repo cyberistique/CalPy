@@ -42,9 +42,7 @@ class func:
                 self.functions[i] = self.derivative(i,var_index)
         return self.functions
     
-
-
-        
+            
 if __name__ == "__main__":
     f = func(lambda x,y,k: k*(y*np.sin(x)), ["x"],constants= {"k":2}, max_derivative=3)
     f.derivative_list(0)

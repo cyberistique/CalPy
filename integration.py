@@ -15,8 +15,6 @@ def multi_int(f,lims):
     limits = []
     pass
         
-
-
 print(integrate(f1,0,10))
 l = [f1]
 #print(l[0])
