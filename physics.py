@@ -59,7 +59,6 @@ class System:
                 wall.collisions(self.points[i], self.coeff_restitution)
         return self.points,self.totalenergy
 
-
 if __name__ == "__main__":
     from .plottings import animate
     import random

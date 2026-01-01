@@ -24,7 +24,6 @@ class point:
         # default collision radius (can be overridden per-point)
         self.radius = 0.5
     
-    
     @property
     def inv_mass(self):
         return 0 if self.m == 0 else 1/self.m

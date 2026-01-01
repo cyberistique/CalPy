@@ -51,8 +51,6 @@ def integrate_rk4(f, y0, t0, dt, steps):
 
     return traj
 
-
-
 if __name__ == "__main__":
     L_obj = lambda x, xdot, m, g,k: 0.5*m*xdot**2-0.5*k*x**2
     lag = Lagrangian(L_obj, variables=("x","xdot"),constants={"m":1.0,"g":9.8,"k":0.5},damper=0)

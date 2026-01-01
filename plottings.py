@@ -23,6 +23,7 @@ def phaseSpace(q,qdot,qname="θ", qdotname="θ̇*"):
     plt.grid(True)
     plt.show()
 
+
 def animate(system):
     fig, axis = plt.subplots()
     line, = axis.plot([], [],marker='o',linestyle='none')

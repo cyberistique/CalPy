@@ -24,7 +24,6 @@ class Lagrangian:
         v1 = f(q + h, qdot)
         return (v1 - v0) / h
     
-    
     def qddot(self, q, qdot):
         """
         Return scalar q'' given q and qdot.
