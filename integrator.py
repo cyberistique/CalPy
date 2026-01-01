@@ -1,8 +1,8 @@
 import numpy as np
-import calc_math as cm
-from plottings import timeVScoordinate, phaseSpace
-from euler_lag import Lagrangian
-import plottings
+from . import calc_math as cm
+from .plottings import timeVScoordinate, phaseSpace
+from .euler_lag import Lagrangian
+from . import plottings
 
 def to_array(y):
     """Convert scalar or list to numpy array."""

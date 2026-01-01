@@ -1,8 +1,8 @@
-from points import point,wall,DistanceConstraint
+from .points import point,wall,DistanceConstraint,random_point
 import numpy as np
 from typing import Union
-from plottings import *
-from formulas import force,potential_energy,kinetic_energy
+from .plottings import *
+from .formulas import force,potential_energy,kinetic_energy
 
 dt = 0.01  # Time step
 class System:
@@ -60,32 +60,16 @@ class System:
         return self.points,self.totalenergy
 
 if __name__ == "__main__":
-    from plottings import animate
+    from .plottings import animate
     import random
 
     # 1. Initialize System (Gravity on, medium restitution)
-    sys = System(earth=True, coeff_restitution=1.0, w=20, h=20)
+    sys = System( coeff_restitution=1.0, w=20, h=20)
 
     # 2. Define 5 particles with random properties
     for i in range(10):
-        # Random position: -8 to 8 (stays inside the 20x20 wall boundaries)
-        rx = random.uniform(-8, 8)
-        ry = random.uniform(-8, 8)
-        charge = random.choice([-1e-5, 1e-5])  # Random charge: -1μC or +1μC
-        # Random velocity: -5 to 5 m/s
-        rvx = random.uniform(-10, 10)
-        rvy = random.uniform(-10, 10)
-        
-        # Random mass and radius for variety
-        rmass = random.uniform(0.5, 2.0)
 
-        p = point(
-            pos=[rx, ry], 
-            m=rmass, 
-            q=charge,
-            v=[rvx, rvy], 
-            a=[0, 0]
-        )
+        p = random_point(xlim=(-8,8), ylim=(-8,8), mrange=(0.5,2.0), qrange=(-1e-5,1e-5), vrange=(-10,10), arange=(-1,1))
         p.radius = 0.25
         
         sys.add_point(p)
@@ -95,6 +79,6 @@ if __name__ == "__main__":
 
     anchor.radius = 0.25
     sys.add_point(anchor)
-    sys.constraints.append(DistanceConstraint(sys.points[0], anchor, length=5.0, stiffness=1.0))
+
     print(f"Simulation started with {len(sys.points)} particles.")
     animate(sys)

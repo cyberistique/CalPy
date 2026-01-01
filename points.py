@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 from typing import Union
-from plottings import *
+from .plottings import *
 
 dt = 0.01
 
@@ -99,6 +99,26 @@ class wall:
             vel_along_normal = np.dot(point.vel, self.normal)
             if vel_along_normal < 0:
                 point.vel -= (1 + rest_coeff) * vel_along_normal * self.normal
+
+
+def random_point(xlim, ylim, mrange, qrange, vrange, arange):
+        """
+        Generate a random point within given ranges.
+
+        :param xlim: range for x position (min, max)
+        :param ylim: range for y position (min, max)
+        :param mrange: range for mass (min, max)
+        :param qrange: range for charge (min, max)
+        :param vrange: velocity range (min, max)
+        :param arange: acceleration range (min, max)
+        """
+        import random
+        positon = np.array([random.uniform(*xlim), random.uniform(*ylim)], dtype=float)
+        mass = random.uniform(*mrange)
+        charge = random.uniform(*qrange)
+        velocity = np.array([random.uniform(*vrange), random.uniform(*vrange)], dtype=float)
+        acceleration = np.array([random.uniform(*arange), random.uniform(*arange)], dtype=float)
+        return point(positon, mass, charge, velocity, acceleration)
 
 if __name__ == "__main__":
     pass

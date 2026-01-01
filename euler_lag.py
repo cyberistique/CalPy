@@ -1,6 +1,6 @@
-from calc_math import func
+from .calc_math import func
 import numpy as np
-import plottings
+from . import plottings
 
 class Lagrangian:
     def __init__(self, L_function, variables, constants=None, damper = 0):

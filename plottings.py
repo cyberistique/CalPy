@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib.animation import PillowWriter
 import numpy as np
+from PIL import Image
 
 def timeVScoordinate(time,q,qname="θ"):
     plt.figure(figsize=(10,4))
