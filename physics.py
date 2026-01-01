@@ -1,25 +1,100 @@
-import euler_lag
+from points import point,wall,DistanceConstraint
 import numpy as np
-from calc_math import func
-import matplotlib.pyplot as plt
-import plottings
-import points
+from typing import Union
+from plottings import *
+from formulas import force,potential_energy,kinetic_energy
 
-# we use just 2 D
+dt = 0.01  # Time step
+class System:
+    def __init__(self, gravity= False,coulomb=False,earth = False, coeff_restitution= 0.9, w=20, h=20):
+        self.points = []
+        self.walls = [
+            wall([-w/2, -h/2], [w/2, -h/2]),
+            wall([w/2, -h/2], [w/2, h/2]),
+            wall([w/2, h/2], [-w/2, h/2]),
+            wall([-w/2, h/2], [-w/2, -h/2])
+        ]
+        self.gravity = gravity
+        self.coulomb = coulomb
+        self.earth = earth
+        self.coeff_restitution = coeff_restitution
+        self.width = w
+        self.height = h
+        self.constraints = []
+        self.totalenergy = 0
 
-def polar_cart(vec):
-    x = vec[0]*np.cos(vec[1])
-    y = vec[1]*np.sin(vec[0])
-    return np.array([x,y])
+    def add_point(self, point: point):
+        self.points.append(point)
 
-def cart_polar(vec):
-    r = np.sqrt(vec[0]**2 + vec[1]**2)
-    theta = np.arctan2(vec[1], vec[0])
-    return np.array([r, theta])
+    def update(self,frame):
+        self.totalenergy = 0
+        for p in self.points:
+            p.acc[:] = 0
+            if self.earth and p.inv_mass > 0:
+                p.acc += force(p.pos, p.m, p.q, 'earth') * p.inv_mass
+            if self.coulomb and p.q != 0:
+                for other in self.points:
+                    if other is not p and other.q != 0:
+                        p.acc += force(other.pos - p.pos, p.m, p.q * other.q, 'electrostatic') * p.inv_mass
+                        self.totalenergy += potential_energy(other.pos - p.pos, p.m, p.q * other.q, 'electrostatic') * 0.5  # each pair counted twice
+            if self.gravity and p.inv_mass > 0:
+                for other in self.points:
+                    if other is not p and other.inv_mass != 0:
+                        p.acc += force(other.pos - p.pos, p.m*other.m, q=0, type='gravity') * p.inv_mass
+                        self.totalenergy += potential_energy(other.pos - p.pos, p.m*other.m, q=0, type='gravity') * 0.5  # each pair counted twice
+            self.totalenergy += kinetic_energy(p.vel, p.m)
+            p.vel += p.acc*dt
+            p.prev_pos = np.array(p.pos, dtype=float)
+            p.pos += p.vel*dt
 
-def potential_energy(obj_pos):
-    r = np.linalg.norm(obj_pos)
-    if r == 0:
-        return 0
-    return -1/r
+        for _ in range(5):
+            for c in self.constraints:
+                c.solve()
+
+        # Handle collisions
+        for i in range(len(self.points)):
+            for j in range(i + 1, len(self.points)):
+                self.points[i].collisions(self.points[j], self.coeff_restitution)
+            for wall in self.walls:
+                wall.collisions(self.points[i], self.coeff_restitution)
+        return self.points,self.totalenergy
+
+if __name__ == "__main__":
+    from plottings import animate
+    import random
+
+    # 1. Initialize System (Gravity on, medium restitution)
+    sys = System(earth=True, coeff_restitution=1.0, w=20, h=20)
+
+    # 2. Define 5 particles with random properties
+    for i in range(10):
+        # Random position: -8 to 8 (stays inside the 20x20 wall boundaries)
+        rx = random.uniform(-8, 8)
+        ry = random.uniform(-8, 8)
+        charge = random.choice([-1e-5, 1e-5])  # Random charge: -1μC or +1μC
+        # Random velocity: -5 to 5 m/s
+        rvx = random.uniform(-10, 10)
+        rvy = random.uniform(-10, 10)
         
+        # Random mass and radius for variety
+        rmass = random.uniform(0.5, 2.0)
+
+        p = point(
+            pos=[rx, ry], 
+            m=rmass, 
+            q=charge,
+            v=[rvx, rvy], 
+            a=[0, 0]
+        )
+        p.radius = 0.25
+        
+        sys.add_point(p)
+
+    # 3. Add one fixed "obstacle" in the middle (mass = 0)
+    anchor = point(pos=[0, -2], m=0, q=0, v=[0, 0], a=[0, 0])
+
+    anchor.radius = 0.25
+    sys.add_point(anchor)
+    sys.constraints.append(DistanceConstraint(sys.points[0], anchor, length=5.0, stiffness=1.0))
+    print(f"Simulation started with {len(sys.points)} particles.")
+    animate(sys)

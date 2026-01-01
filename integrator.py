@@ -1,6 +1,9 @@
 import numpy as np
 import calc_math as cm
-from plottings import plot_trajectory
+from plottings import timeVScoordinate, phaseSpace
+from euler_lag import Lagrangian
+import plottings
+
 def to_array(y):
     """Convert scalar or list to numpy array."""
     if isinstance(y, (int, float)):
@@ -52,19 +55,24 @@ def integrate_rk4(f, y0, t0, dt, steps):
 
 
 if __name__ == "__main__":
-    pendulum = cm.func(
-    function_ = lambda t, theta, omega, g, L: np.array([
-        omega,
-        -(g/L) * np.sin(theta)
-    ]),
-    variables=["t","theta","omega"],
-    max_derivative=0,
-    constants={"g": 9.81, "L": 1.0}
-)
+    L_obj = lambda x, xdot, m, g,k: 0.5*m*xdot**2-0.5*k*x**2
+    lag = Lagrangian(L_obj, variables=("x","xdot"),constants={"m":1.0,"g":9.8,"k":0.5},damper=0)
 
-    traj = integrate_rk4(pendulum.functions[0], y0=[1, 0], t0=0, dt=0.01, steps=1000)
+    q = 0        # initial angle
+    qdot = 100     # initial angular velocity
+    dt = 0.01
+    steps = 2000
 
+    trajectory = []
 
-    # printing first few points
-    for t, y in traj[995:]:
-        print(t, y)
+    trajectory = integrate_rk4(lag.qddot, [q, qdot], 0, dt, steps)
+
+    print("Final state:", q, qdot)
+
+# Extract arrays for plotting
+    angles = [s[0] for s in trajectory]
+    vels   = [s[1] for s in trajectory]
+    time   = np.arange(len(trajectory)) * dt
+
+    plottings.timeVScoordinate(time, angles, qname="x")
+    plottings.phaseSpace(angles, vels, qname="x", qdotname="xdot")
