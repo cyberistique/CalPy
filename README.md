@@ -26,62 +26,64 @@ Electrostatic (Coulomb) force
 🔹 Easily extensible for new forces and integrators
 
 📁 Project Structure
-CalPy/
+```CalPy/
 ├── Physics.py        # Core physics engine
 ├── points.py         # Particle class and state definitions
 ├── formulas.py       # Force equations (gravity, electrostatics)
 ├── integrator.py     # Numerical integration methods
 ├── plottings.py      # Visualization and animation utilities
 └── main.py           # Example simulation runner
-
+```
 🚀 Getting Started
+--------
 Requirements
-
+```
 Python 3.9+
 NumPy
 Matplotlib
+```
 
 Install dependencies:
-
+```
 pip install numpy matplotlib
-
+```
 Running a Simulation
-python main.py
+
 
 
 This will run a default simulation of interacting particles and display an animated visualization of their motion.
 
 📊 Example Output
+--------
 
-(Add a GIF or screenshot here — this is VERY important for resume impact)
 
-Example: Particle motion under electrostatic repulsion with dynamic trajectories.
 
 🧠 Physics Model
-
+--------
 Each particle is defined by:
 
-Position
-Velocity
-Mass
-Charge
+- Position
+- Velocity
+- Mass
+- Charge
 
 At each timestep:
 
-Net force on each particle is computed
-Acceleration is calculated using Newton’s laws (future functionality will have option to use lagrangian mechanics for acceleration calcultation)
-Particle states are updated via numerical integration
-Positions are visualized dynamically
+- Net force on each particle is computed
+- Acceleration is calculated using Newton’s laws (future functionality will have option to use lagrangian mechanics for acceleration calcultation)
+- Particle states are updated via numerical integration
+- Positions are visualized dynamically
 
 📌 Planned Improvements
 
-⚡ Energy conservation diagnostics
-🧲 External field support (uniform E/B fields)
-🖥️ Command-line interface (CLI)
-🌐 Web-based interactive interface (Flask)
-🎥 Export animations to GIF or MP4
+- ⚡ Energy conservation diagnostics
+- 🧲 External field support (uniform E/B fields)
+- 🖥️ Command-line interface (CLI)
+- 🌐 Web-based interactive interface (Flask)
+- 🎥 Export animations to GIF or MP4
 
 🎓 Motivation
 
 This project was built to explore computational physics, numerical methods, and simulation design, bridging concepts from classical mechanics with practical scientific computing.
+
 
