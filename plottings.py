@@ -38,6 +38,5 @@ def animate(system):
         text_obj.set_text(f'total_energy={total_energy:.2f}')
         return line, text_obj
     ani = animation.FuncAnimation(
-        fig, update, frames=300, interval=20
-    )
+        fig, update, frames=300, interval=20)
     plt.show()

@@ -18,7 +18,6 @@ def integrate_euler(f, y0, t0, dt, steps):
     """
     y = to_array(y0)
     t = t0
-
     traj = [(t, y.copy())]
 
     for _ in range(steps):
