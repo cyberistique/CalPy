@@ -48,15 +48,54 @@ Install dependencies:
 pip install numpy matplotlib
 ```
 Running a Simulation
+--------
+```
+    from plottings import animate
+    import random
 
+    # 1. Initialize System (Gravity on, medium restitution)
+    sys = System( coeff_restitution=1.0, w=20, h=20)
 
+    # 2. Define 5 particles with random properties
+    for i in range(10):
+        # Random position: -8 to 8 (stays inside the 20x20 wall boundaries)
+        rx = random.uniform(-8, 8)
+        ry = random.uniform(-8, 8)
+        charge = random.choice([-1e-5, 1e-5])  # Random charge: -1μC or +1μC
+        # Random velocity: -5 to 5 m/s
+        rvx = random.uniform(-10, 10)
+        rvy = random.uniform(-10, 10)
+        
+        # Random mass and radius for variety
+        rmass = random.uniform(0.5, 2.0)
+
+        p = point(
+            pos=[rx, ry], 
+            m=rmass, 
+            q=charge,
+            v=[rvx, rvy], 
+            a=[0, 0]
+        )
+        p.radius = 0.25
+        
+        sys.add_point(p)
+
+    # 3. Add one fixed "obstacle" in the middle (mass = 0)
+    anchor = point(pos=[0, -2], m=0, q=0, v=[0, 0], a=[0, 0])
+
+    anchor.radius = 0.25
+    sys.add_point(anchor)
+    
+    print(f"Simulation started with {len(sys.points)} particles.")
+    animate(sys)
+```
 
 This will run a default simulation of interacting particles and display an animated visualization of their motion.
 
 📊 Example Output
 --------
 
-
+![hippo]([https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTI2YzZ3am5ramZxeHl2ZGpxbDlpOWxqbm9hdWFkbHZ4eTM5NG9tbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/O9DO7khSB6bvo539gk/giphy.gif])
 
 🧠 Physics Model
 --------
@@ -85,5 +124,6 @@ At each timestep:
 🎓 Motivation
 
 This project was built to explore computational physics, numerical methods, and simulation design, bridging concepts from classical mechanics with practical scientific computing.
+
 
 
