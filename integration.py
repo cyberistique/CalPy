@@ -1,30 +1,22 @@
-from calc_math import func
+from math import *
 
-class Lagrangian:
-    def __init__(self, L_function, variables, constants=None):
-        self.L = func(L_function, variables, max_derivative=2, constants=constants)
-        self.variables = variables
+def f1(x):
+    return x**2
 
-        self.dL_dq       = self.L.derivative_list()[1]      
-        self.dL_dqdot    = self.L.derivative_list(1)[1]      
-        self.d2L_dqdot2  = self.L.derivative_list(1)[2]      
+def integrate(f, a, b, N=1000):
+    dx = (b - a) / N
+    total = 0
+    for i in range(N):
+        mid = a + (i + 0.5) * dx
+        total += f(mid) * dx
+    return total
 
-    def euler_lagrange(self, q, qdot):
-        """
-        Returns qddot from Euler-Lagrange equation:
-        d/dt(∂L/∂qdot) - ∂L/∂q = 0
-        => qddot = (∂L/∂q - ∂²L/∂qdot² * qdot) / ∂²L/∂qdot²
-        """
-        numerator   = self.dL_dq(q, qdot)
-        denominator = self.d2L_dqdot2(q, qdot)
+def multi_int(f,lims):
+    limits = []
+    pass
+        
 
-        return (numerator - denominator * qdot) / denominator
-    
- 
-q, qdot = q0, qdot0
-dt = 0.01
-T = 1000
-for t in range(T):
-    qddot = euler_lagrange(q, qdot)
-    q += qdot * dt
-    qdot += qddot * dt
+
+print(integrate(f1,0,10))
+l = [f1]
+#print(l[0])

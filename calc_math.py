@@ -46,7 +46,7 @@ class func:
 
         
 if __name__ == "__main__":
-    f = func(lambda x,y,k: k*((x**2)+(y**2)), ["x"],constants= {"k":2}, max_derivative=3)
+    f = func(lambda x,y,k: k*(y*np.sin(x)), ["x"],constants= {"k":2}, max_derivative=3)
     f.derivative_list(0)
     x = 2
     y = 2
@@ -56,7 +56,3 @@ if __name__ == "__main__":
     f.derivative_list(1)
     print("first_derivative, y : ",f.functions[2](x,y))
     print(f.functions)
-
-    L = lambda theta, thetadot, m, L, g: \
-    0.5*m*(L**2)*thetadot**2 - m*g*L*(1 - np.cos(theta))
-    
