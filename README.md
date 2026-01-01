@@ -95,7 +95,7 @@ This will run a default simulation of interacting particles and display an anima
 📊 Example Output
 --------
 
-![hippo]([https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTI2YzZ3am5ramZxeHl2ZGpxbDlpOWxqbm9hdWFkbHZ4eTM5NG9tbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/O9DO7khSB6bvo539gk/giphy.gif])
+![giphy](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTI2YzZ3am5ramZxeHl2ZGpxbDlpOWxqbm9hdWFkbHZ4eTM5NG9tbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/O9DO7khSB6bvo539gk/giphy.gif)
 
 🧠 Physics Model
 --------
@@ -124,6 +124,7 @@ At each timestep:
 🎓 Motivation
 
 This project was built to explore computational physics, numerical methods, and simulation design, bridging concepts from classical mechanics with practical scientific computing.
+
 
 
 
