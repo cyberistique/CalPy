@@ -1,6 +1,8 @@
 🧮 CalPy
-A Modular Particle Physics Simulation Engine in Python
+=========
 
+A Modular Particle Physics Simulation Engine in Python
+--------
 CalPy is a lightweight, extensible physics simulation engine for modeling the dynamics of point particles under classical forces such as gravity and electrostatics. It is designed for experimentation, visualization, and learning in computational physics.
 
 The engine supports modular force models, numerical integrators, and animated visualizations using NumPy and Matplotlib.
@@ -82,3 +84,4 @@ Positions are visualized dynamically
 🎓 Motivation
 
 This project was built to explore computational physics, numerical methods, and simulation design, bridging concepts from classical mechanics with practical scientific computing.
+
