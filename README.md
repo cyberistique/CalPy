@@ -58,24 +58,8 @@ Running a Simulation
 
     # 2. Define 5 particles with random properties
     for i in range(10):
-        # Random position: -8 to 8 (stays inside the 20x20 wall boundaries)
-        rx = random.uniform(-8, 8)
-        ry = random.uniform(-8, 8)
-        charge = random.choice([-1e-5, 1e-5])  # Random charge: -1μC or +1μC
-        # Random velocity: -5 to 5 m/s
-        rvx = random.uniform(-10, 10)
-        rvy = random.uniform(-10, 10)
-        
-        # Random mass and radius for variety
-        rmass = random.uniform(0.5, 2.0)
 
-        p = point(
-            pos=[rx, ry], 
-            m=rmass, 
-            q=charge,
-            v=[rvx, rvy], 
-            a=[0, 0]
-        )
+        p = random_point(xlim=(-8,8), ylim=(-8,8), mrange=(0.5,2.0), qrange=(-1e-5,1e-5), vrange=(-10,10), arange=(-1,1))
         p.radius = 0.25
         
         sys.add_point(p)
@@ -85,7 +69,7 @@ Running a Simulation
 
     anchor.radius = 0.25
     sys.add_point(anchor)
-    
+
     print(f"Simulation started with {len(sys.points)} particles.")
     animate(sys)
 ```
@@ -124,6 +108,7 @@ At each timestep:
 🎓 Motivation
 
 This project was built to explore computational physics, numerical methods, and simulation design, bridging concepts from classical mechanics with practical scientific computing.
+
 
 
 
