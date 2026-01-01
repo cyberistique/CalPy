@@ -50,28 +50,32 @@ pip install numpy matplotlib
 Running a Simulation
 --------
 ```
-    from plottings import animate
-    import random
+from Calc_math.Physics import System
+from Calc_math.points import random_point, point
+from Calc_math.plottings import animate
 
-    # 1. Initialize System (Gravity on, medium restitution)
-    sys = System( coeff_restitution=1.0, w=20, h=20)
 
-    # 2. Define 5 particles with random properties
+def main():
+    sim = System(coeff_restitution=1.0, w=20, h=20)
+
+    # 2. Define 10 particles with random properties
     for i in range(10):
-
-        p = random_point(xlim=(-8,8), ylim=(-8,8), mrange=(0.5,2.0), qrange=(-1e-5,1e-5), vrange=(-10,10), arange=(-1,1))
+        p = random_point(xlim=(-8, 8), ylim=(-8, 8), mrange=(0.5, 2.0), qrange=(-1e-5, 1e-5), vrange=(-10, 10), arange=(-1, 1))
         p.radius = 0.25
-        
-        sys.add_point(p)
+        sim.add_point(p)
 
     # 3. Add one fixed "obstacle" in the middle (mass = 0)
     anchor = point(pos=[0, -2], m=0, q=0, v=[0, 0], a=[0, 0])
 
     anchor.radius = 0.25
-    sys.add_point(anchor)
+    sim.add_point(anchor)
 
-    print(f"Simulation started with {len(sys.points)} particles.")
-    animate(sys)
+    print(f"Simulation started with {len(sim.points)} particles.")
+    animate(sim)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 This will run a default simulation of interacting particles and display an animated visualization of their motion.
@@ -108,6 +112,7 @@ At each timestep:
 🎓 Motivation
 
 This project was built to explore computational physics, numerical methods, and simulation design, bridging concepts from classical mechanics with practical scientific computing.
+
 
 
 
