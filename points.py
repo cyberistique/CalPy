@@ -100,4 +100,5 @@ class wall:
             if vel_along_normal < 0:
                 point.vel -= (1 + rest_coeff) * vel_along_normal * self.normal
 
-    
+if __name__ == "__main__":
+    pass

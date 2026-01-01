@@ -34,3 +34,7 @@ def force(r,m,q,type,K=0):
         return np.array([0, -m*g])  # Gravitational force near Earth's surface
     else:
         raise ValueError("Unknown interaction type")
+
+if __name__ == "__main__":
+    # Example usage
+    pass
